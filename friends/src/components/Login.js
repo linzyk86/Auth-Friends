@@ -1,56 +1,56 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-const Login = (props) => {
-    const [state, setState] = useState({
+class Login extends React.Component{
+      state = {
         credentials: {
-            username: "",
-            password: ""
-        }
-    });
+        username: "",
+        password: ""
+    }
+  };
 
-    const handleChange = e => {
-        setState({
+    handleChange = e => {
+        this.setState({
             credentials: {
-                ...state.credentials,
+                ...this.state.credentials,
                 [e.target.name]: e.target.value
             }
         });
     };
 
-    const login = e => {
+    login = e => {
         e.preventDefault();
         // make a post request to the login endpoint on the server
         axios
-            .post('http://localhost:5000/api/login', state.credentials)
+            .post('http://localhost:5000/api/login', this.state.credentials)
             .then(res => {
                 console.log(res.data);
                 localStorage.setItem('token', res.data.payload);
                 // redirect the user to the app's main logged in page
-                props.history.push('/protected');
+                this.props.history.push('/protected');
             })
             .catch(err => console.log({ err }));
     };
 
-   
+        render(){
         return (
             <div>
-                <form onSubmit = {login}>
+                <form onSubmit = {this.login}>
                     <input
                         type='text'
                         name='username'
                         id='username'
                         placeholder='Username'
-                        value = {state.credentials.username}
-                        onChange = { handleChange}
+                        value = {this.state.credentials.username}
+                        onChange = { this.handleChange}
                     />
                     <input
                         type='text'
                         name='password'
                         id='password'
                         placeholder='Password'
-                        value = {state.credentials.password}
-                        onChange = { handleChange}
+                        value = {this.state.credentials.password}
+                        onChange = { this.handleChange}
 
                     />
                     <button>Login</button>
@@ -59,6 +59,6 @@ const Login = (props) => {
         );
     
 };
-
+}
 
 export default Login;
