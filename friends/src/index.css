@@ -7,6 +7,30 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a{
+  text-decoration: none;
+  color: slateblue;
+  font-size: 2em;
+  padding: 10px;
+}
+ul{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+.friends{
+  background-color: lightgrey;
+  margin: 5px auto;
+  max-width: 30%;
+  padding: 5px 10px;
+  border-radius: 5px;
+
+
+}
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
