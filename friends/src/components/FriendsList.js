@@ -1,24 +1,52 @@
 import React from "react";
 import moment from "moment";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import axios from 'axios'
 
 class FriendsList extends React.Component {
     state = {
-        friends: []
+        friends: [],
+        newFriend: {
+            id:'',
+            name:'',
+            age:'',
+            email:''
+        }
     };
-
-   
 
 
     componentDidMount() {
         this.getData();
     }
 
-    // addFriend =()=>{
-    //     let newFriend = {...friends, newFriend}
-    //     axiosWithAuth.post('/friends',newFriend)
+    handleChange = e => {
+         this.setState({
+            newFriend: {
+                ...this.state.newFriend,
+               [e.target.name]: e.target.value
+            }
+        });
+        console.log(this.state.friends);
+        console.log('blah');
+        console.log(this.state.newFriend);
 
-    // }
+        };
+    
+    
+
+    addFriend =(e)=>{
+        e.preventDefault();
+        
+        axiosWithAuth().post("/friends",this.state.newFriend)
+    .then(res=>{
+        console.log('hello');
+        this.setState({
+            friends:res.data
+        })
+        console.log(res.data);
+    })
+    .catch(err=>console.log({err}));
+    }
 
    
 
@@ -43,27 +71,27 @@ class FriendsList extends React.Component {
                 <form onSubmit = {this.addFriend}>
                     <input
                         type='text'
-                        name='newFriendName'
+                        name='name'
                         id='newFriendName'
                         placeholder='Name'
-                        value = {this.state.newFriendName}
+                        value = {this.state.newFriend.name}
                         onChange = { this.handleChange}
                     />
                     <input
                         type='text'
-                        name='newFriendAge'
+                        name='age'
                         id='newFriendAge'
                         placeholder='Age'
-                        value = {this.state.newFriendAge}
+                        value = {this.state.newFriend.age}
                         onChange = { this.handleChange}
 
                     />
                     <input
                         type='text'
-                        name='newFriendEmail'
+                        name='email'
                         id='newFriendEmail'
                         placeholder='Email'
-                        value = {this.state.newFriendEmail}
+                        value = {this.state.newFriend.email}
                         onChange = { this.handleChange}
 
                     />
